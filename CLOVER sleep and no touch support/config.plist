@@ -49,6 +49,48 @@
 				</dict>
 				<dict>
 					<key>Comment</key>
+					<string>change EHC1 to EH01</string>
+					<key>Disabled</key>
+					<false/>
+					<key>Find</key>
+					<data>
+					RUhDMQ==
+					</data>
+					<key>Replace</key>
+					<data>
+					RUgwMQ==
+					</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>change EHC2 to EH02</string>
+					<key>Disabled</key>
+					<false/>
+					<key>Find</key>
+					<data>
+					RUhDMg==
+					</data>
+					<key>Replace</key>
+					<data>
+					RUgwMg==
+					</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>change XHCI to XHC</string>
+					<key>Disabled</key>
+					<false/>
+					<key>Find</key>
+					<data>
+					WEhDSQ==
+					</data>
+					<key>Replace</key>
+					<data>
+					WEhDXw==
+					</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
 					<string>Change _OSI to XOSI, use with SSDT-XOSI.aml</string>
 					<key>Disabled</key>
 					<false/>
@@ -245,6 +287,20 @@
 					<key>Replace</key>
 					<data>
 					QlJUWAKg
+					</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>rename HPET to XPET,  pair with SSDT-HPET.aml</string>
+					<key>Disabled</key>
+					<false/>
+					<key>Find</key>
+					<data>
+					SFBFVA==
+					</data>
+					<key>Replace</key>
+					<data>
+					WFBFVA==
 					</data>
 				</dict>
 			</array>
