@@ -310,13 +310,15 @@
 				<data>
 				AACbPg==
 				</data>
-				<key>Comment-layout-id</key>
-				<string>AppleALC layout-id for ALC298 (ALC3266 according to Dell) audio</string>
 				<key>device-id</key>
 				<data>
 				mz4AAA==
 				</data>
 				<key>enable-cflbkit</key>
+				<data>
+				AQAAAA==
+				</data>
+				<key>enable-hdmi20</key>
 				<data>
 				AQAAAA==
 				</data>
@@ -332,8 +334,6 @@
 				<data>
 				AACQAw==
 				</data>
-				<key>layout-id</key>
-				<integer>30</integer>
 			</dict>
 		</dict>
 		<key>USB</key>
