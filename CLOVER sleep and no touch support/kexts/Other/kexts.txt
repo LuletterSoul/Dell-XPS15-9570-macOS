@@ -1,4 +1,0 @@
-- FakeSMC*.kext (2018-0915)
-  https://github.com/RehabMan/OS-X-FakeSMC-kozlek
-  Implements SMC emulator, which is required to boot macOS.
-  Must be in CLOVER/kexts/Other instead of /Library/Extensions
