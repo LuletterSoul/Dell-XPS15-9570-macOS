@@ -1,6 +1,10 @@
 # 介绍
->该EFI可以使XPS 9570在Mojave环境下正常工作，这个配置的大部分内容是基于[Xigtun](https://github.com/Xigtun/xps-9570-mojave),[bavariancake](https://github.com/bavariancake/XPS9570-macOS)两位朋友的EFI借鉴得到的，同时807133286朋友向大家提供了非常及时的局部更新.在这里，我要对他们的无私帮助和奉献表示感谢。我总结了Xigtun和bavariancake的配置优缺点,内容如下：
+该EFI可以使`Dell XPS 9570 4K`在Mojave环境下正常工作，大部分内容是基于[Xigtun](https://github.com/Xigtun/xps-9570-mojave),[bavariancake](https://github.com/bavariancake/XPS9570-macOS)两位朋友的EFI综合改进得到。其中两位同仁向我们提供了非常关键的修复：
+* @0xFireWolf 提供了DPCH、[HDMI](https://www.tonymacx86.com/threads/fix-coffee-lake-intel-uhd-graphics-630-on-macos-mojave-hdmi-output-issue-public-testing-stage.275126/)的修复补丁，使XPS 9570的正常睡眠与HDMI原生输出有了可能！
+* @807133286 提供了[触控板驱动方案](https://github.com/Xigtun/xps-9570-mojave/issues/23)，是XPS 9570拥有将近白苹果触控板的体验！
 
+在这里，我要对@0xFireWolf、@bavariancake、@Xigtun、@807133286的无私帮助和奉献表示感谢。还有在[XPS 9570 Hackintosh Guide](https://www.tonymacx86.com/threads/wip-guide-xps-9570-hackintosh-guide.259844/)中，很多兄弟提交他们所遇问题，分享各种解决方案，让我领悟到许多Hackintosh的配置方式，这个EFI是以上所有朋友铸就的！再次谢谢他们！
+我总结了Xigtun和bavariancake的配置优缺点,内容如下：
 ## Xigtun 
  ### 优点
  * 解锁触控板的大部分高级手势
@@ -84,16 +88,29 @@
 ![原生管理](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/raw/master/screenshots/Extention.png)
 ![变频](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/raw/master/screenshots/Intel%20Turbo%20Boost.png)
 # 更新历史
-## 用FireWolf的WhateverGreen修复HDMI输出
- 长久困扰着XPS 9570的HDMI问题终于有了解决方案，依旧是来自FireWolf的[Coffee Lake Intel UHD Graphics 630 on macOS Mojave: HDMI Output Issue ](https://www.tonymacx86.com/threads/fix-coffee-lake-intel-uhd-graphics-630-on-macos-mojave-hdmi-output-issue-public-testing-stage.275126/)。（大佬曾解决了630HD 4k输出的panic问题，非常感谢他！）通过Devices/Properties下注入con index修复补丁，这个方案仅仅适用于HDMI接口没有路由至独立显卡的机器！本人机器上测试情况：HDMI2.0线接HDMI口到2K显示器,TypeC转DP线接TypeC口到4K显示器，输出正常，且支持HDMI Audio高清输出。
+## 修复HDMI输出
+XPS 9570的HDMI输出问题终于有了进展：依旧是来自@0xFireWolf的出色工作：[Coffee Lake Intel UHD Graphics 630 on macOS Mojave: HDMI Output Issue ](https://www.tonymacx86.com/threads/fix-coffee-lake-intel-uhd-graphics-630-on-macos-mojave-hdmi-output-issue-public-testing-stage.275126/)。（大佬也曾针对CoffeLake UHD 630 Graphic造成的panic问题提出了解决方案，真是太强了）！解决方式如下：
+
+1.使用FireWolf发布的WhateverGreen。
+
+2.在Devices/Properties中添加如下entry:
+ * `framebuffer-con1-enable 01000000`
+ * `framebuffer-con1-alldata 01050900 00040000 87010000`
+ * `framebuffer-con2-enable 01000000`
+ * `framebuffer-con2-alldata 03040A00 00080000 87010000`
+
+本机上双屏输出成功的样例：
+ * `2K 60Hz display<--->HDMI 2.0 cable<---->HDMI 2.0 port(支持HDMI Audio)`
+ * `4k 60Hz display<--->Type C to DP cable<---->Type C port`
+ 
+单屏幕输出成功的样例：
+ * `4k 60Hz display<--->HDMI 2.0 cable<---->HDMI 2.0 port`
 ## 禁用board id侦测
- 为了使Type C接口工作，之前使用的方法是使用iMac,14的board-id,该方法会导致电池图标重启，经反馈可能使DA300转接失效。现在使用原生的mbp,15的board-id,同时使用agdpmod=vit9696禁用其侦测。
-## 日常更新Voodool2CHID
+此前，使用macbook pro 15的board-id存在问题(因为Mac OS的主板侦测)，通过修改board-id为iMac,14,可以驱动Type-C接口。但是，经测试该方法有一定几率使电池图标在重启后消失，也可能使DA300 Hub失效。现使用原生的Mbp,15的board-id,同时使用WhateverGreen 中的启动参数agdpmod=vit9696禁用其侦测。
+## 更新Voodool2CHID v2.1.5
   可能修复了一些bug。
-## 2048显存
-  通过WhateverGreen修改显存为2048M,可能会解决花屏问题。
+## 将显存修改为2048MB
+  通过WhateverGreen修改显存为2048M,可能会解决一些机型的花屏问题。
 # 声明
-
 我尝试直接升级10.14.4，失败了。因此我选择我停留在10.14.3（18D42）,在这个版本上机器工作得很好，希望有意愿的朋友可以尝试升级到10.14.3更高版本进行测试，期待更多的朋友可以加入进来，让XPS 9570 实现真正的Hackintosh!
-
 如果你需要发布此EFI或转载给他人，请务必注明我的仓库出处，以及[Xigtun](https://github.com/Xigtun/xps-9570-mojave),[bavariancake](https://github.com/bavariancake/XPS9570-macOS)的仓库地址，请勿用于商业行为！尊重开源与劳动！您的合作与支持是我们持续维护和分享的动力。
