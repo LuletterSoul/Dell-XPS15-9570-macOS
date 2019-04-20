@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>BuildMachineOSBuild</key>
-	<string>18B75</string>
+	<string>18D109</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -40,6 +40,32 @@
 	<string>10B61</string>
 	<key>IOKitPersonalities</key>
 	<dict>
+		<key>VoodooGPIOCannonLakeH</key>
+		<dict>
+			<key>CFBundleIdentifier</key>
+			<string>org.coolstar.VoodooGPIO</string>
+			<key>IOClass</key>
+			<string>VoodooGPIOCannonLakeH</string>
+			<key>IONameMatch</key>
+			<array>
+				<string>INT3450</string>
+			</array>
+			<key>IOProviderClass</key>
+			<string>IOService</string>
+		</dict>
+		<key>VoodooGPIOCannonLakeLP</key>
+		<dict>
+			<key>CFBundleIdentifier</key>
+			<string>org.coolstar.VoodooGPIO</string>
+			<key>IOClass</key>
+			<string>VoodooGPIOCannonLakeLP</string>
+			<key>IONameMatch</key>
+			<array>
+				<string>INT34BB</string>
+			</array>
+			<key>IOProviderClass</key>
+			<string>IOService</string>
+		</dict>
 		<key>VoodooGPIOSunrisePointH</key>
 		<dict>
 			<key>CFBundleIdentifier</key>
