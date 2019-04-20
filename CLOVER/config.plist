@@ -322,6 +322,22 @@
 				<data>
 				AQAAAA==
 				</data>
+				<key>framebuffer-con1-alldata</key>
+				<data>
+				AQUJAAAEAACHAQAA
+				</data>
+				<key>framebuffer-con1-enable</key>
+				<data>
+				AQAAAA==
+				</data>
+				<key>framebuffer-con2-alldata</key>
+				<data>
+				AwQKAAAIAACHAQAA
+				</data>
+				<key>framebuffer-con2-enable</key>
+				<data>
+				AQAAAA==
+				</data>
 				<key>framebuffer-fbmem</key>
 				<data>
 				AAAAAA==
@@ -333,6 +349,10 @@
 				<key>framebuffer-stolenmem</key>
 				<data>
 				AACQAw==
+				</data>
+				<key>framebuffer-unifiedmem</key>
+				<data>
+				AAAAgA==
 				</data>
 			</dict>
 		</dict>
