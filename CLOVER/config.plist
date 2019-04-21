@@ -16,6 +16,8 @@
 				<false/>
 				<key>AddPNLF</key>
 				<true/>
+				<key>FakeLPC</key>
+				<false/>
 				<key>FixHPET</key>
 				<false/>
 				<key>FixIPIC</key>
@@ -257,7 +259,7 @@
 	<key>Boot</key>
 	<dict>
 		<key>Arguments</key>
-		<string>abm_firstpolldelay=16000 -gux_defer_usb2 -ngfxbeta slide=0 kext-dev-mode=1 darkwake=1 dart=0 brcmfx-country=#a npci=0x2000 keepsyms=1 -disablegfxfirmware -lilubetaall agdpmod=vit9696 -igfxcflhdmi -v</string>
+		<string>slide=0 darkwake=1 -ngfxbeta npci=0x2000 dart=0 brcmfx-country=#a -disablegfxfirmware -lilubetaall agdpmod=vit9696 -igfxcflhdmi -v</string>
 		<key>CustomLogo</key>
 		<string>Alternate</string>
 		<key>Debug</key>
@@ -340,7 +342,7 @@
 				</data>
 				<key>framebuffer-fbmem</key>
 				<data>
-				AAAAAA==
+				AAAAAw==
 				</data>
 				<key>framebuffer-patch-enable</key>
 				<data>
@@ -437,6 +439,8 @@
 			<key>Nvidia</key>
 			<false/>
 		</dict>
+		<key>PatchVBios</key>
+		<false/>
 		<key>ig-platform-id</key>
 		<string>0x3e9b0000</string>
 	</dict>
@@ -608,7 +612,7 @@
 				<false/>
 				<key>Find</key>
 				<data>
-				SIPDBEiD+why0A==
+				SIPDBEiD+whysw==
 				</data>
 				<key>InfoPlistPatch</key>
 				<false/>

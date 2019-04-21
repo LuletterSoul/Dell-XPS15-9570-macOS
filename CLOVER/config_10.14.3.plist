@@ -16,6 +16,8 @@
 				<false/>
 				<key>AddPNLF</key>
 				<true/>
+				<key>FakeLPC</key>
+				<false/>
 				<key>FixHPET</key>
 				<false/>
 				<key>FixIPIC</key>
@@ -257,7 +259,7 @@
 	<key>Boot</key>
 	<dict>
 		<key>Arguments</key>
-		<string>abm_firstpolldelay=16000 -gux_defer_usb2 -ngfxbeta slide=0 kext-dev-mode=1 darkwake=1 dart=0 brcmfx-country=#a npci=0x2000 keepsyms=1 -disablegfxfirmware -lilubetaall -v</string>
+		<string>slide=0 darkwake=1 -ngfxbeta npci=0x2000 dart=0 brcmfx-country=#a -disablegfxfirmware -lilubetaall agdpmod=vit9696 -igfxcflhdmi -v</string>
 		<key>CustomLogo</key>
 		<string>Alternate</string>
 		<key>Debug</key>
@@ -322,9 +324,25 @@
 				<data>
 				AQAAAA==
 				</data>
+				<key>framebuffer-con1-alldata</key>
+				<data>
+				AQUJAAAEAACHAQAA
+				</data>
+				<key>framebuffer-con1-enable</key>
+				<data>
+				AQAAAA==
+				</data>
+				<key>framebuffer-con2-alldata</key>
+				<data>
+				AwQKAAAIAACHAQAA
+				</data>
+				<key>framebuffer-con2-enable</key>
+				<data>
+				AQAAAA==
+				</data>
 				<key>framebuffer-fbmem</key>
 				<data>
-				AAAAAA==
+				AAAAAw==
 				</data>
 				<key>framebuffer-patch-enable</key>
 				<data>
@@ -333,6 +351,10 @@
 				<key>framebuffer-stolenmem</key>
 				<data>
 				AACQAw==
+				</data>
+				<key>framebuffer-unifiedmem</key>
+				<data>
+				AAAAgA==
 				</data>
 			</dict>
 		</dict>
@@ -398,6 +420,8 @@
 			<key>Tool</key>
 			<true/>
 		</dict>
+		<key>ScreenResolution</key>
+		<string>1920x1080</string>
 		<key>Theme</key>
 		<string>Mojave</string>
 	</dict>
@@ -417,6 +441,8 @@
 			<key>Nvidia</key>
 			<false/>
 		</dict>
+		<key>PatchVBios</key>
+		<false/>
 		<key>ig-platform-id</key>
 		<string>0x3e9b0000</string>
 	</dict>
@@ -588,7 +614,7 @@
 				<false/>
 				<key>Find</key>
 				<data>
-				SIPDBEiD+whysw==
+				SIPDBEiD+why0A==
 				</data>
 				<key>InfoPlistPatch</key>
 				<false/>
@@ -621,11 +647,9 @@
 		<key>BiosVersion</key>
 		<string>MBP151.88Z.F000.B00.1809280842</string>
 		<key>Board-ID</key>
-		<string>Mac-031B6874CF7F642A</string>
+		<string>Mac-937A206F2EE63C01</string>
 		<key>BoardManufacturer</key>
 		<string>Apple Inc.</string>
-		<key>BoardSerialNumber</key>
-		<string>C02826301GUJP4FJA</string>
 		<key>BoardType</key>
 		<integer>10</integer>
 		<key>BoardVersion</key>
@@ -637,7 +661,7 @@
 		<key>ChassisType</key>
 		<string>0x09</string>
 		<key>EfiVersion</key>
-		<string>220.200.252.0.0</string>
+		<string>220.250.320.0.0</string>
 		<key>Family</key>
 		<string>MacBook Pro</string>
 		<key>FirmwareFeatures</key>
@@ -654,17 +678,13 @@
 		<string>0x1A</string>
 		<key>ProductName</key>
 		<string>MacBookPro15,1</string>
-		<key>SerialNumber</key>
-		<string>C02WXAZ1KGYG</string>
-		<key>SmUUID</key>
-		<string>3BC099BF-FCB6-4E20-9AEB-C64C04075E18</string>
 		<key>Version</key>
 		<string>1.0</string>
 	</dict>
 	<key>SystemParameters</key>
 	<dict>
 		<key>CustomUUID</key>
-		<string>3BC099BF-FCB6-4E20-9AEB-C64C04075E18</string>
+		<string>E3E9A1EF-A107-460A-A101-7CBAE0E35A3F</string>
 		<key>InjectKexts</key>
 		<string>Detect</string>
 	</dict>
