@@ -6,14 +6,23 @@
 	<dict/>
 	<key>files2</key>
 	<dict>
+		<key>PlugIns/VoodooGPIO.kext</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			BWIFvpkQuxe/pWe7NumGENcvbJI=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"7ec321698a96d2f8ac0cb2930045f38015580b8c" or cdhash H"056205be9910bb17bfa567bb36e98610d72f6c92"</string>
+		</dict>
 		<key>PlugIns/VoodooI2CServices.kext</key>
 		<dict>
 			<key>cdhash</key>
 			<data>
-			JT6TkiOb5RYU4DTN3SYT1RMWbjs=
+			UzqtxBCn65ZOp0WP2TMFST4iftY=
 			</data>
 			<key>requirement</key>
-			<string>cdhash H"8489c2a2b635f7acb37149b7b1cb80a1f0f50ca3" or cdhash H"253e9392239be51614e034cddd2613d513166e3b"</string>
+			<string>cdhash H"d37c8b2818843a819b699156679c06569494d2f8" or cdhash H"533aadc410a7eb964ea7458fd93305493e227ed6"</string>
 		</dict>
 	</dict>
 	<key>rules</key>
