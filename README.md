@@ -26,7 +26,7 @@
  * DSDT加载方法存在错误
  
 ## 我的改进
-当然，以上配置已经可以让XPS 9570的几个版本正常使用，但离真正的fawlessly还是有差距。我致力于融合以上两位的工作成果，得到一个完善的配置。在`Mojave 10.14.3`版本下,我的配置解决了以下问题:
+当然，以上配置已经可以让XPS 9570的几个版本正常使用，但离真正的flawlessly还是有差距。我致力于融合以上两位的工作成果，得到一个完善的配置。在`Mojave 10.14.4`版本下,我的配置解决了以下问题:
 
  * 支持Type-C外接显示器输出
  * 支持HDMI口外接显示器输出
@@ -54,26 +54,25 @@
   * Nvida Geforce 1050Ti (无解，已屏蔽)
 
 # 软件环境
- * BIOS: 1.7.0,1.5.0
- * Mojave 10.14.3 + Windows 10 1809系统
- * macOS: 10.14.2, 10.14.3
+ * BIOS: 1.8.1,1.7.0,1.5.0
+ * 系统: Mojave 10.14.4 + Windows 10 1809系统
+ * macOS: 10.14.2, 10.14.3,10.14.4(已支持)
 
 # 使用方法
  * 将CLOVER放入EFI分区，使用config_install.plist进系统完成安装
  * 进入桌面后运行`sudo kextcache -i /`重建缓存
  * 用config.plist使能集显加速
  * 加入自生成的三码
- 
- `config_10.14.4.plist`是我为了想升级10.14.4版本的朋友准备的，因为精力有限我还未能进行测试，期待有人反馈结果。
 
 # 已知问题
  * 睡眠唤醒后，蓝牙随机出现不可用。
- * -v 模式无法进入系统
+ * -v 模式无法进入系统(见[折中方案](#compromise))
+ * 第一阶段与第二阶段苹果logo大小不一致
+ * HDMI adapter 睡眠唤醒后丢失，无法点亮4k@60Hz显示器
  
 # 待测试
  * 雷电三接口
  * 非4k、8750H的机型
- * 在10.14.4上运行
  
 # 关于本机
 ![关于本机](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/blob/master/screenshots/2048_mem.png)
@@ -81,13 +80,32 @@
 ![集显](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/raw/master/screenshots/Graphic.png)
 ![双显示器输出](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/raw/master/screenshots/dual_displays.png)
 ![输出细节](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/raw/master/screenshots/dual_displays_details.png)
+![触控板](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/raw/master/screenshots/trackpad.png)
 ![USB3.1](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/raw/master/screenshots/USB3.1.png)
 ![电池](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/raw/master/screenshots/Battery.png)
 ![DW1830蓝牙](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/raw/master/screenshots/DW1830%20Bluetooth.png)
 ![DW1830 Wifi](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/raw/master/screenshots/DW1830%20Wifi.png)
 ![原生管理](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/raw/master/screenshots/Extention.png)
 ![变频](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/raw/master/screenshots/Intel%20Turbo%20Boost.png)
+# 折中方案
+ <span id = "compromise"></span>
+ ## 去除 -v 模式
+ 将`VoodooI2C.kext`,`VoodooI2CHID.kext`,`VoodooPS2Controller.kext` 安装到
+ `/System/Library/Extensions/`, 重建缓存。
+ ## 耳机无声
+ 为ALC298启用守护进程。见[ALC298PlugFix](https://github.com/jardenliu/ALC298PlugFix)
 # 更新历史
+## 支持10.14.4
+  现在的配置支持10.14.4了
+## 注入USB Power Property
+   使用SSDT-USBX.aml 注入四项USB电源属性，设备充电信息变完整了。见[USB power property injection for Sierra (and later)](https://www.tonymacx86.com/threads/guide-usb-power-property-injection-for-sierra-and-later.222266/),谢谢伟人 RehabMan!
+## 修复电池显示
+   删除了abm_firstpolldelay=16000，修复了重启后电量不显示的问题。
+## 驱动更新
+  * VoovooI2C 更新至 v1.2.6 ,支持输入时防触控，支持双指激活通知中心。谢谢 [alexandred](https://github.com/alexandred/VoodooI2C)！
+  * AppleALC 更新至 v1.3.7
+  * AirportBcrmFixup 更新至 v1.19
+  * CPUFriend 与 CPUFriendDataProvider 重新生成，改善8750H的变频效果
 ## 修复HDMI输出
 XPS 9570的HDMI输出问题终于有了进展：依旧是来自@0xFireWolf的出色工作：[Coffee Lake Intel UHD Graphics 630 on macOS Mojave: HDMI Output Issue ](https://www.tonymacx86.com/threads/fix-coffee-lake-intel-uhd-graphics-630-on-macos-mojave-hdmi-output-issue-public-testing-stage.275126/)。（大佬也曾针对CoffeLake UHD 630 Graphic造成的panic问题提出了解决方案，真是太强了）！解决方式如下：
 
@@ -106,11 +124,11 @@ XPS 9570的HDMI输出问题终于有了进展：依旧是来自@0xFireWolf的出
 单屏幕输出成功的样例：
  * `4k 60Hz display<--->HDMI 2.0 cable<---->HDMI 2.0 port`
 ## 禁用board id侦测
-此前，使用macbook pro 15的board-id存在问题(因为Mac OS的主板侦测)，通过修改board-id为iMac,14,可以驱动Type-C接口。但是，经测试该方法有一定几率使电池图标在重启后消失，也可能使DA300 Hub失效。现使用原生的Mbp,15的board-id,同时使用WhateverGreen 中的启动参数agdpmod=vit9696禁用其侦测。
+此前，使用macbook pro 15的board-id存在问题(因为Mac OS的主板侦测)，通过修改board-id为iMac,14,可以驱动Type-C接口。现使用原生的Mbp,15的board-id,同时使用WhateverGreen 中的启动参数agdpmod=vit9696禁用其侦测。
 ## 更新Voodool2CHID v2.1.5
   可能修复了一些bug。
 ## 将显存修改为2048MB
   通过WhateverGreen修改显存为2048M,可能会解决一些机型的花屏问题。
 # 声明
-我尝试直接升级10.14.4，失败了。因此我选择我停留在10.14.3（18D42）,在这个版本上机器工作得很好，希望有意愿的朋友可以尝试升级到10.14.3更高版本进行测试，期待更多的朋友可以加入进来，让XPS 9570 实现真正的Hackintosh!
+现在XPS 9570 已经在最新版本工作得很好啦。希望有意愿的朋友可以探索已知问题列表中的issues，或者提出更多可改进的方案，让XPS 9570 实现真正的Hackintosh!
 如果你需要发布此EFI或转载给他人，请务必注明我的仓库出处，以及[Xigtun](https://github.com/Xigtun/xps-9570-mojave),[bavariancake](https://github.com/bavariancake/XPS9570-macOS)的仓库地址，请勿用于商业行为！尊重开源与劳动！您的合作与支持是我们持续维护和分享的动力。
