@@ -53,7 +53,7 @@
   * Nvidia Geforce 1050Ti (无解，已屏蔽)
 
 # 软件环境
- * BIOS: `1.5.0， 1.7.0， 1.8.1， 1.10.1`
+ * BIOS: `1.5.0， 1.7.0， 1.8.1， 1.10.1，1.11.2`
  * 系统: `Mac Mojave + Windows 10 1809` 双系统共存
  * macOS: `10.14.2, 10.14.3, 10.14.4,  10.14.5`
 # 使用方法
@@ -73,7 +73,7 @@
   
   `dpcd-max-link-rate` = `<14000000>`
 ### `confug_1080P.plist` 
-  该文件专门用来驱动XPS 9570 1080P版本的机型，其中
+  该文件专门用来驱动XPS 9570 1080P版本的机型，与`config.plist`的不同仅在：
   
    `dpcd-max-link-rate` = `<0A000000>`
 
@@ -89,27 +89,87 @@
  * 5.**使用 `config.plist(for 4k)`**：如果你的机器是4k版本，则可以直接使用`config.plist`。否则，见步骤6
   
  * 6.**使用 `config_1080P.plist`**：如果你机型是XPS 9570 1080P,将   `config_1080P.plist`重命名为`config.plist`替换原config
- * 7.**加入生成三码**：用`Clover Configruator` 编辑 `config.plist`，加入随机生成三码
- * 8.**验证UHD630是否已驱动**：如果核显已经驱动，XPS的4K显示屏应该自动开启1080P的hDpi体现清晰视界
+ * 7.**加入生成三码**：本仓库没有填入默认的三码，如果你想激活Facetime和iMessage，请参考[bavariancake](https://github.com/bavariancake/XPS9570-macOS)提供的激活方案，或者提取白苹果机器中的三码在本机中使用。如果您没有激活需求，那么您可用`Clover Configruator` 编辑 `config.plist`，在`SIMBIOS`一项中，选择机型`MacBookPro15,1`，随机生成一套三码使用。
 
-   9.**将部分驱动加入`L/E`或者`S/L/E`（可选）**:在本仓库配置的基础上，如果您想去掉`-v`模式，并让驱动注入方式更加接近白苹果，请仿照[折中方案--去除-v模式]()的驱动安装方法，将`CLOVE/kexts/Other`路径中的驱动安装到`L/E`或者`S/L/E`，然后将`CLOVER/kexts/Ohter`已安装的驱动删除
+ * 8.**验证UHD630是否已驱动**：如果核显已经驱动，XPS的4K显示屏应该自动开启1080P的HDpi体现清晰视界。关于本机的报告中的显卡一栏应该显示为`Intel UHD Graphics 630 2048 MB`
+
+   9.**将部分驱动加入`L/E`或者`S/L/E`（可选）**:在本仓库配置的基础上，如果您想让驱动注入方式更加接近白苹果，请仿照[折中方案--去除-v模式]()的驱动安装方法，建议仅保留在将`CLOVE/kexts/Other`中的`VirtualSmc`，其余驱动安装到`L/E`或者`S/L/E`下，然后把在`CLOVER/kexts/Ohter`路径中已安装的驱动删除。最后，重建缓存重启电脑。（注意！在每次系统更新后，已安装的驱动缓存会被清空，要重复以上操作。）
 
 
 # 已知问题
- * 4K版本高负载下风扇噪声较大，温度较高，电池续航仅为2.5h
+
+ * 4K版本高负载下风扇噪声较大，温度较高，电池续航仅为2.5小时
  * 在使用电池时，睡眠唤醒后蓝牙不可用
  * -v 模式无法进入系统，可将触摸板驱动放入L/E或者S/L/E(见[折中方案--去除-v模式](#compromise))
  * kernel_task 进程占用一直不低于20%，或超过100%（此类问题见[折中方案--解决kernel_task超高占用](#compromise))
  * 睡眠有一定几率出现wake sleep transition的内核崩溃
  * 不能用鼠标和键盘唤醒，只能用电源和开盖唤醒
+ * 雷电三设备不支持热插拔，仅支持冷启动
  
 # 待测试
  * `Mac Catalina 10.15.X` 
- * 雷电三设备热插拔
  * 非4k、8750H的机型
  
+# 折中方案
+## 安装界面找不到固态硬盘
+
+  开机进入BIOS，将硬盘模式改为AHCI，在系统安装并驱动完成后切换至原模式。当然，保留AHCI工作也是正常的。
+
+ <span id = "compromise"></span>
+ ## 去除 -v 模式
+ 仓库的默认配置保留了`-v`模式，目的有以下三个：
+ * 从`CLOVER/kexts/Other`中注入触摸板与屏幕触控驱动，去掉`-v`模式会导致机器重启
+ * 在首次系统安装、进入时，方便大家调试和记录错误
+ * 保留驱动安装位置的自主选择权
+
+如果您想去除`-v`启动参数，让clover的工作模式切换为正常模式，您需要进行以下步骤：
+   * 使用 `Kext Utility` 将 `/CLOVER/kexts/Other/` 中的 `VoodooI2C.kext`, `VoodooI2CHID.kext`, `VoodooPS2Controller.kext`安装到 `/System/Library/Extensions/` 或者 `/Libary/Extensions`目录下
+  *  使用`Kext Utility`，或者在终端运行`sudo kextcache -i /`来重建缓存
+  * 编辑`config.plist`，删除Boot/Boot Arguments中的`-v`参数；
+  * 删除`/CLOVER/kexts/Other/`三个已安装的驱动
+
+注意，在首次进入系统时，可以先保留`-v`，确保机器能够正常工作后再进行此项优化。
+
+ ## 耳机偶尔无声
+
+### 问题描述 
+
+原生声卡被成功驱动后，插入耳机调到最大音量，却只听到很低的声音，打开系统设置的声音，在输入源的两个选项做切换，耳机音量又恢复正常，关闭系统设置后，过了约2分钟声音再次失效。
+
+### 解决方法
+
+ 如果耳机随机无声，可以考虑为ALC298启用一个守护进程。见[ALC298PlugFix](https://github.com/jardenliu/ALC298PlugFix)
+
+ ## 解决kernel_task超高占用
+
+ ### 问题描述
+
+ 错误的Layout Id可能使AppleALC工作异常，导致内核繁忙，kernel_taskCPU使用率超过100%，详细讨论见[ISSUE #2](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/issues/2)、[ISSUE #8](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/issues/8)，也可能是AppleALC与某些驱动冲突导致的）。
+ 
+ ### 解决方法
+
+ 不同机器的ALC298声卡可能需要使用不同Layout Id,本配置默认的Layout Id 为30，据测试，另一些机器可能需要使用72，因此你需要为机器注入合适的Layout-id（30 or 72），可以有以下两种方式：
+
+
+
+ * DSDT注入：反编译`SSDT-Config` ，将AUDL值设置为`0x48`。如果你想注入Layout-id 72，请下载[SSDT-Config.zip](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/files/3075808/SSDT-Config.zip)，将文件替换到`CLOVER/ACPI/patched`
+  
+ * CLOVER注入：因为SSDT-Config影响了Clover的原生注入方式，因此常规注入失效。如果你需要将layout-id更改为72，这里可使用`Clover Configurator`在`config.plist`的`Devices`添加设备`PciRoot(0)/Pci(0x1f,3)`，在对应的`Properties`中添加以下项：
+   * `layout-id   72   NUMBER`
+
+ ## 驱动Dell DA300 网卡
+
+ ### 问题描述
+
+  Mojave不具备Realtek 8153网卡驱动，如果想通过DA300接入以太网，则端口会收不到对应的网络数据包
+### 解决方法
+
+需安装额外驱动，详细讨论见[ISSUE #23](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/issues/23).  
+
+## 为CPU生成变频信息
+  [one-key-cpufriend](https://github.com/stevezhengshiqi/one-key-cpufriend)一键在桌面生成`CPUFriendDataProvider.kext`,  `CPUFriendDataProvider.kext`，然后将这两个驱动移动到`/CLOVER/kexts/Other/`或安装到`L/E`，`S/L/E`
 # 关于本机
-![关于本机](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/blob/master/screenshots/2048_mem.png)
+![关于本机](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/blob/master/screenshots/about_my_machine.png)
 ![Nvme固态硬盘](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/raw/master/screenshots/NVME.png)
 ![集显](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/raw/master/screenshots/Graphic.png)
 ![双显示器输出](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/raw/master/screenshots/dual_displays.png)
@@ -121,52 +181,20 @@
 ![DW1830 Wifi](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/raw/master/screenshots/DW1830%20Wifi.png)
 ![原生管理](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/raw/master/screenshots/Extention.png)
 ![变频](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/raw/master/screenshots/Intel%20Turbo%20Boost.png)
-# 折中方案
-## 安装界面找不到固态硬盘
-  开机进入BIOS，将硬盘模式改为AHCI
 
- <span id = "compromise"></span>
- ## 去除 -v 模式
- 为了方便排除一些潜在错误，默认的配置保留了启动参数-v。如果想让clover的工作模式切换为正常模式，您需要进行以下步骤：
-   * 使用 `Kext Utility` 将 `/CLOVER/kexts/Other/` 中的 `VoodooI2C.kext`, `VoodooI2CHID.kext`, `VoodooPS2Controller.kext`安装到 `/System/Library/Extensions/` 或者 `/Libary/Extensions`
-  *  使用`Kext Utility`，或者在终端运行`sudo kextcache -i /`来重建缓存
-  * 编辑`config.plist`，删除Boot/Boot Arguments中的`-v`参数；
-  * 删除`/CLOVER/kexts/Other/`三个已安装的驱动
-
-注意，在首次进入系统时，可以先保留`-v`，确保机器能够正常工作后再进行此项优化。
-
- ## 耳机偶尔无声
- 如果耳机随机无声，可以考虑为ALC298启用一个守护进程。见[ALC298PlugFix](https://github.com/jardenliu/ALC298PlugFix)
-
- ## 解决kernel_task超高占用
- 错误的Layout Id可能使AppleALC工作异常，导致内核繁忙，如[ISSUE #2](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/issues/2)、[ISSUE #8](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/issues/8)，也可能是AppleALC与某些驱动冲突导致的）。不同机器的ALC298声卡可能需要使用不同Layout Id,本配置默认的Layout Id 为30，据测试，另一些机器可能需要使用72，因此你需要为机器注入合适的Layout-id（30 or 72），可以有以下两种方式：
-
-
-
- * DSDT注入：反编译`SSDT-Config` ，将AUDL值设置为`0x48`。如果你想注入Layout-id 72，请下载[SSDT-Config.zip](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/files/3075808/SSDT-Config.zip)，将文件替换到`CLOVER/ACPI/patched`
-  
- * CLOVER注入：因为SSDT-Config影响了Clover的原生注入方式，因此常规注入失效。如果你需要将layout-id更改为72，这里可使用`Clover Configurator`在`config.plist`的`Devices`添加设备`PciRoot(0)/Pci(0x1f,3)`，在对应的`Properties`中添加以下项：
-   * `layout-id   72   NUMBER`
-
- ## 驱动Dell DA300 网卡
-  Mojave不具备Realtek 8153网卡驱动，如果想通过DA300接入以太网，需安装额外驱动，详细讨论见[ISSUE #23](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/issues/23).  
-
-
-## 为CPU生成变频信息
-  [one-key-cpufriend](https://github.com/stevezhengshiqi/one-key-cpufriend)一键在桌面生成`CPUFriendDataProvider.kext`,  `CPUFriendDataProvider.kext`，然后将这两个驱动移动到`/CLOVER/kexts/Other/`或安装到`L/E`，`S/L/E`
 # 更新历史
 ## 2019年7月5日
   * 更新至 10.14.5(18F203)
-  * 更新至 BIOS 1.10.1
+  * 更新至 BIOS 1.11.2(使用这个版本的XPS变得安静一些了，建议更新测试)
   * 更新至 Clover 4979
   * 用VirtualSmc替换FakeSmc，电量显示更精确
   * 修复了非啰嗦模式进入系统时两阶段苹果Logo尺寸不一致的问题
   * 修复`HDMI 2.0 4k@60Hz 1080P hDpi`模式在唤醒后失效的问题
     * [@FireWolf更新](https://github.com/acidanthera/WhateverGreen/pull/24)：这个PR加入了针对LPSCON适配器的驱动，通过将该适配器的工作模式设为Protocol Converter Mode，使DP信号转化为HDMI 2.0信号，从而使UHD630支持4k@60Hz输出（再次顿首叩谢大佬FireWolf！）
     * 测试情况：使用官方的WEG 1.3.0，将显示器的工作模式设置为在4k@60hz<-->1080P@60hz hDPi，首次进入系统后HDMI 2.0支持热插拔，但睡眠唤醒显示器无信号。用RDM将工作模式调节为4k@60hz <--> 1080@30hz hDpi，显示器被点亮
-    * 实验结果：在首次进入系统时，官方WEG提供的LPSCON驱动虽然最大化了HDMI2.0端口传输速率（通过将LPSCON的工作模式置为PCON），但在机器睡眠唤醒后，LPSCON的寄存器信息被重置为初始值，WEG没有在唤醒后更新LPSCON的工作模式
+    * 实验结果：在首次进入系统时，官方WEG提供的LPSCON驱动虽然最大化了HDMI2.0端口传输速率（通过将LPSCON的工作模式置为PCON），但在机器睡眠唤醒后，LPSCON的寄存器信息被重置为初始值，WEG没有在唤醒后继续更新LPSCON的工作模式
     * 解决方法：修改内核扩展源码，删除LPSCON驱动仅进行一次初始化的逻辑，在每次系统进入、唤醒、重启后，使内核都创建一个LPSCON Driver实例，本机成功修复了上述问题，需要更多后续测试和反馈
-  * 在  `devices/Properties/PciRoot(0x0)/Pci(0x2,0x0)`  中加入LPSCON的启动参数以激活驱动，详情见[使用手册](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.cn.md)。
+  * 在  `devices/Properties/PciRoot(0x0)/Pci(0x2,0x0)`  中加入新的启动参数以激活LPSCON驱动，详情见[WEG使用手册](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.cn.md)。
       * `enable-lspcon-support` = `<01000000>`
       * `framebuffer-con2-has-lspcon` = `<01000000>`
       * `framebuffer-conX-preferred-lspcon-mode` = `<01000000>`
@@ -177,7 +205,9 @@
     `enable-dpcd-max-link-rate-fix` = `<01000000>`
 
     `dpcd-max-link-rate` = `<1400000>` (1080P为`<0A000000>`)
-
+  
+  * 更新至 Voodool2 2.2
+  * 删除了config中一些无用的启动参数
 
   
 ## 2019年4月21日 
@@ -225,16 +255,19 @@ XPS 9570的HDMI输出问题终于有了进展：依旧是来自@0xFireWolf的出
 # 声明
 使用该配置的XPS 9570 4K似乎在最新版本工作得很好，持续测试后仍存在许多内核问题、驱动问题，我的愿景是让XPS 9570 4K在Mac OS可以“完美”运行。
 
-但目前看来很困难。首先，我是一名在校大学生，学业十分繁忙，真正接触到XPS 9570黑苹果是在去年12月份，无论从知识基础而言，还是从知识的深广度而言，都十分局限，黑苹果不是我的专业，面临一些疑难杂症无法快速提供解决方案；其次，我的设备和机型十分有限，很多来自不同机型的朋友提出了在我机型上没有体现过的问题，以及一些相关的外设驱动问题（如雷电设备），缺乏设备让我的测试工作举步维艰；再有，Github的朋友虽然踊跃提出很多问题，但大部分偏基础而非广泛性的Bug。也有一些朋友，虽然已经找到相关问题的解决方案，偏偏因为各种原因没把方案详细记录下来给后续人们留下宝贵经验。
+但目前看来很困难。首先，我是一名在校大学生，学业十分繁忙，真正接触到XPS 9570黑苹果是在去年12月份，无论从知识基础而言，还是从知识的深广度而言，都十分局限，黑苹果不是我的专业，面临一些疑难杂症无法快速提供解决方案；其次，我的缺乏很多外设和机型，很具有自不同机型的朋友，提出了在我机型上没有体现过的问题，以及一些相关的外设驱动问题（如雷电设备），缺乏设备让我的测试工作举步维艰；再有，Github的朋友虽然踊跃提出很多问题，但大部分偏基础而非广泛性的Bug。也有一些朋友，虽然已经找到相关问题的解决方案，偏偏因为各种原因没把方案详细记录下来给后续人们留下宝贵经验。
 
-因此，时间、精力、能力限制我对此仓库维护的及时性，很多ISSUE的提问我也没时间一一回答。Mac Catalina 10.15.X版本即将到来，新版本在XPS 9570的运行情况如何呢？我不知道，但我希望有意愿、有能力的朋友，可以跟我一起探索、攻克已知的困难问题，及时PR或反馈一些有合作性的贡献（如完善中英文ReadMe。。），或者提出更多可改进的方案，而不是伸手无畏、闭门造车，让XPS 9570 实现真正的Hackintosh!
+因此，时间、精力、能力限制我对此仓库维护的及时性，很多ISSUE的提问我也没时间一一回答。`Mac Catalina 10.15.X`版本即将到来，新版本在XPS 9570的运行情况如何呢？我不知道，但我希望有意愿、有能力的朋友，可以跟我一起探索、攻克已知的困难问题，及时PR或反馈一些有合作性的贡献（如完善中英文ReadMe、提供不同机型的反馈），或者提出更多可改进的方案，而不是做伸手无畏、闭门造车的路人。
 
-最后，如果您需要发布此EFI或转载给他人，请务必注明我的仓库出处，以及[Xigtun](https://github.com/Xigtun/xps-9570-mojave),[bavariancake](https://github.com/bavariancake/XPS9570-macOS)的仓库地址。如果您肯定我的工作，我很乐意介绍一颗来自君子的大写星星哦~~
+希望此仓库可以持续给大家提供有意义的更新，希望XPS 9570 能早日实现完美的Hackintosh!
+
+最后，我非常支持大家推广本项目，但如果您需要发布此EFI或转载给他人，请务必注明我的仓库出处，以及[Xigtun](https://github.com/Xigtun/xps-9570-mojave),[bavariancake](https://github.com/bavariancake/XPS9570-macOS)的仓库地址。如果您肯定我的工作，我也很乐意接受一颗来自君子的大写星星哦~~
 
 **请勿用于商业行为！尊重开源与劳动！您的合作与支持是我们持续维护和分享的动力。**
 
 # 鸣谢
 - [Apple](https://www.apple.com) for macOS
+- [Rehabman](https://github.com/RehabMan)：提供了大量的黑苹果驱动，国外黑苹果论坛的大佬，向大佬致敬！
 - [Lilu](https://github.com/acidanthera/Lilu)： 向该内核扩展项目伟大的逆向工程师与开发者致敬！
 - [WhateverGreen](https://github.com/acidanthera/WhateverGreen)：感谢所有参与该开源内核扩展项目的伟大开发者！
 - [FireWolf](https://github.com/0xFireWolf/)： 提供DPCD最大链路速率修复、Intel HDMI无限循环连接修复、LSPCON驱动支持等核心的通用性开源贡献，使得基于UHD630的一些新机型，特别是XPS 9570提供了非常强大的技术难关攻坚，非常感谢他！
@@ -243,5 +276,5 @@ XPS 9570的HDMI输出问题终于有了进展：依旧是来自@0xFireWolf的出
 其基础上对[bavariancake](https://github.com/bavariancake/XPS9570-macOS)的配置进行深度融合，加以改进才得到如今比较完美的配置，谢谢这位无私的同仁！
 - @807133286 ：最早在Xigtun仓库中提出了可移植的[触控板驱动方案](https://github.com/Xigtun/xps-9570-mojave/issues/23)，给XPS 9570拥有将近白苹果触控板的体验，是改善XPS 9570触控版的灵感来源！
 - [远景论坛](http://bbs.pcbeta.com/forum-559-1.html)：谢谢诸位大神提供的通用教程，让我能够以小白的身份轻松入门！
-- [黑果小兵](https://blog.daliansky.net/): 国内需要更多这样无私、高水平的黑苹果布道者，感谢他！
+- [黑果小兵](https://blog.daliansky.net/): 我想，国内需要更多这样无私的、高水平的黑苹果布道者，感谢他！
 - 感谢所有在仓库上曾提供了非常有意义ISSUE、测试反馈的朋友们，是你们让XPS 9570的黑苹果配置变得原来越好，你们持续的反馈和支持让这个项目变得更有意义！
