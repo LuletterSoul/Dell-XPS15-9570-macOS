@@ -88,7 +88,7 @@
 
  * 5.**使用 `config.plist(for 4k)`**：如果你的机器是4k版本，则可以直接使用`config.plist`。否则，见步骤6
   
- * 6.**使用 `config_1080P.plist`**：如果你机型是XPS 9570 1080P,将   `config_1080P.plist`重命名为`config.plist`替换原config
+ * 6.**使用 `config_1080p.plist`**：如果你机型是XPS 9570 1080P,将   `config_1080P.plist`重命名为`config.plist`替换原config
  * 7.**加入生成三码**：本仓库没有填入默认的三码，如果你想激活Facetime和iMessage，请参考[bavariancake](https://github.com/bavariancake/XPS9570-macOS)提供的激活方案，或者提取白苹果机器中的三码在本机中使用。如果您没有激活需求，那么您可用`Clover Configruator` 编辑 `config.plist`，在`SIMBIOS`一项中，选择机型`MacBookPro15,1`，随机生成一套三码使用。
 
  * 8.**验证UHD630是否已驱动**：如果核显已经驱动，XPS的4K显示屏应该自动开启1080P的HDpi体现清晰视界。关于本机的报告中的显卡一栏应该显示为`Intel UHD Graphics 630 2048 MB`
@@ -104,7 +104,7 @@
  * kernel_task 进程占用一直不低于20%，或超过100%（此类问题见[折中方案--解决kernel_task超高占用](#compromise))
  * 睡眠有一定几率出现wake sleep transition的内核崩溃
  * 不能用鼠标和键盘唤醒，只能用电源和开盖唤醒
- * 雷电三设备不支持热插拔，仅支持冷启动
+ * 雷电三设备不支持热插拔，仅支持冷启动后的半热插拔
  
 # 待测试
  * `Mac Catalina 10.15.X` 
@@ -117,8 +117,11 @@
 
  <span id = "compromise"></span>
  ## 去除 -v 模式
- 仓库的默认配置保留了`-v`模式，目的有以下三个：
- * 从`CLOVER/kexts/Other`中注入触摸板与屏幕触控驱动，去掉`-v`模式会导致机器重启
+ ### 问题描述
+ 从`CLOVER/kexts/Other`中注入触摸板与屏幕触控驱动，去掉`-v`模式会导致机器重启
+
+ ### 解决方案
+ 仓库的默认配置保留了`-v`模式，目的有以下两个个：
  * 在首次系统安装、进入时，方便大家调试和记录错误
  * 保留驱动安装位置的自主选择权
 
@@ -138,7 +141,7 @@
 
 ### 解决方法
 
- 如果耳机随机无声，可以考虑为ALC298启用一个守护进程。见[ALC298PlugFix](https://github.com/jardenliu/ALC298PlugFix)
+ 为ALC298启用一个守护进程。见[ALC298PlugFix](https://github.com/jardenliu/ALC298PlugFix)
 
  ## 解决kernel_task超高占用
 
@@ -168,6 +171,17 @@
 
 ## 为CPU生成变频信息
   [one-key-cpufriend](https://github.com/stevezhengshiqi/one-key-cpufriend)一键在桌面生成`CPUFriendDataProvider.kext`,  `CPUFriendDataProvider.kext`，然后将这两个驱动移动到`/CLOVER/kexts/Other/`或安装到`L/E`，`S/L/E`
+
+## 雷电3设备热插拔
+  ### 问题描述
+  雷电设备热插拔后工作不正常，讨论见[ISSUE #4](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/issues/4)。
+  ### 解决方法
+  使用仓库内基于SSDT的半雷电3补丁后，执行以下步骤：
+  * 重启进入BIOS 将 `BIOS assist enumeration` 设为 `enabled` 
+  * 将BIOS雷电接口相关设置都设为开放式，让雷电接口的访问权限设为最低
+  * 从Dell官网下载最新的Thunderbolt固件更新并安装
+  * 在 `Windows` 系统下连接雷电设备，连接权限设为设为 `Always allow`
+  * 在系统启动前，连接雷电3设备，然后进入`Mac Mojave` 测试热插拔，检验其是否工作正常
 # 关于本机
 ![关于本机](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/blob/master/screenshots/about_my_machine.png)
 ![Nvme固态硬盘](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/raw/master/screenshots/NVME.png)
@@ -183,6 +197,9 @@
 ![变频](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/raw/master/screenshots/Intel%20Turbo%20Boost.png)
 
 # 更新历史
+## 2019年7月6日
+  * 新增雷电接口3半热插拔SSDT补丁，以便进行广泛性测试，来自[ISSUE #4 @andresandiah](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/issues/4#issuecomment-506429102)，感谢他！
+
 ## 2019年7月5日
   * 更新至 10.14.5(18F203)
   * 更新至 BIOS 1.11.2(使用这个版本的XPS变得安静一些了，建议更新测试)
