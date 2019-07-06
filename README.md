@@ -199,6 +199,7 @@
 # 更新历史
 ## 2019年7月6日
   * 新增雷电接口3半热插拔SSDT补丁，以便进行广泛性测试，来自[ISSUE #4 @andresandiah](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/issues/4#issuecomment-506429102)，感谢他！
+  * 更新至WEG 1.3.X，修复了LPSCON驱动状态获取错误的问题
 
 ## 2019年7月5日
   * 更新至 10.14.5(18F203)
