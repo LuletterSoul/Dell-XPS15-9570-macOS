@@ -259,7 +259,7 @@
 	<key>Boot</key>
 	<dict>
 		<key>Arguments</key>
-		<string>slide=0 darkwake=1 -ngfxbeta npci=0x2000 dart=0 brcmfx-country=#a -lilubetaall agdpmod=vit9696</string>
+		<string>slide=0 darkwake=1 -ngfxbeta npci=0x2000 dart=0 brcmfx-country=#a -lilubetaall agdpmod=vit9696 -v</string>
 		<key>CustomLogo</key>
 		<false/>
 		<key>Debug</key>
@@ -367,10 +367,6 @@
 				<key>framebuffer-patch-enable</key>
 				<data>
 				AQAAAA==
-				</data>
-				<key>framebuffer-portcount</key>
-				<data>
-				BAAAAA==
 				</data>
 				<key>framebuffer-stolenmem</key>
 				<data>

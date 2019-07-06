@@ -259,9 +259,9 @@
 	<key>Boot</key>
 	<dict>
 		<key>Arguments</key>
-		<string>slide=0 darkwake=1 -ngfxbeta npci=0x2000 dart=0 brcmfx-country=#a -disablegfxfirmware -lilubetaall agdpmod=vit9696 -igfxcflhdmi -v</string>
+		<string>slide=0 darkwake=1 -ngfxbeta npci=0x2000 dart=0 brcmfx-country=#a -lilubetaall agdpmod=vit9696 -v</string>
 		<key>CustomLogo</key>
-		<string>Alternate</string>
+		<false/>
 		<key>Debug</key>
 		<false/>
 		<key>DefaultVolume</key>
@@ -271,7 +271,7 @@
 		<key>NeverHibernate</key>
 		<false/>
 		<key>NoEarlyProgress</key>
-		<true/>
+		<false/>
 		<key>Secure</key>
 		<false/>
 		<key>StrictHibernate</key>
@@ -316,11 +316,23 @@
 				<data>
 				mz4AAA==
 				</data>
+				<key>dpcd-max-link-rate</key>
+				<data>
+				CgAAAA==
+				</data>
 				<key>enable-cflbkit</key>
 				<data>
 				AQAAAA==
 				</data>
+				<key>enable-dpcd-max-link-rate-fix</key>
+				<data>
+				AQAAAA==
+				</data>
 				<key>enable-hdmi20</key>
+				<data>
+				AQAAAA==
+				</data>
+				<key>enable-lspcon-support</key>
 				<data>
 				AQAAAA==
 				</data>
@@ -337,6 +349,14 @@
 				AwQKAAAIAACHAQAA
 				</data>
 				<key>framebuffer-con2-enable</key>
+				<data>
+				AQAAAA==
+				</data>
+				<key>framebuffer-con2-has-lspcon</key>
+				<data>
+				AQAAAA==
+				</data>
+				<key>framebuffer-con2-preferred-lspcon-mode</key>
 				<data>
 				AQAAAA==
 				</data>
@@ -420,8 +440,6 @@
 			<key>Tool</key>
 			<true/>
 		</dict>
-		<key>ScreenResolution</key>
-		<string>1920x1080</string>
 		<key>Theme</key>
 		<string>Mojave</string>
 	</dict>
@@ -611,10 +629,10 @@
 				<key>Comment</key>
 				<string>ALT: Set the maximum link rate in DPCD buffer to 0x14 (HBR2) for laptops with 4K display (by FireWolf)</string>
 				<key>Disabled</key>
-				<false/>
+				<true/>
 				<key>Find</key>
 				<data>
-				SIPDBEiD+why0A==
+				SIPDBEiD+whysw==
 				</data>
 				<key>InfoPlistPatch</key>
 				<false/>
@@ -633,10 +651,6 @@
 		<string>0x28</string>
 		<key>CsrActiveConfig</key>
 		<string>0x67</string>
-		<key>ROM</key>
-		<data>
-		3X4MEllz
-		</data>
 	</dict>
 	<key>SMBIOS</key>
 	<dict>
@@ -683,8 +697,6 @@
 	</dict>
 	<key>SystemParameters</key>
 	<dict>
-		<key>CustomUUID</key>
-		<string>E3E9A1EF-A107-460A-A101-7CBAE0E35A3F</string>
 		<key>InjectKexts</key>
 		<string>Detect</string>
 	</dict>
