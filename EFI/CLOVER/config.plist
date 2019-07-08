@@ -211,6 +211,20 @@
 					WFBFVA==
 					</data>
 				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>rename _CRS to XCRS ,pair with SSDT-I2C.aml</string>
+					<key>Disabled</key>
+					<false/>
+					<key>Find</key>
+					<data>
+					FEwEX0NSUwCgDpVPU1lTC9wHpFNCRkk=
+					</data>
+					<key>Replace</key>
+					<data>
+					FEwEWENSUwCgDpVPU1lTC9wHpFNCRkk=
+					</data>
+				</dict>
 			</array>
 		</dict>
 		<key>DisabledAML</key>
@@ -315,6 +329,10 @@
 				<key>device-id</key>
 				<data>
 				mz4AAA==
+				</data>
+				<key>disable-external-gpu</key>
+				<data>
+				AQAAAA==
 				</data>
 				<key>dpcd-max-link-rate</key>
 				<data>

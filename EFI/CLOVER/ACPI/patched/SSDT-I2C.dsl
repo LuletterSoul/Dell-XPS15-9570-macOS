@@ -1,39 +1,38 @@
-/*
- * Intel ACPI Component Architecture
- * AML/ASL+ Disassembler version 20180427 (64-bit version)(RM)
- * Copyright (c) 2000 - 2018 Intel Corporation
- * 
- * Disassembling to non-symbolic legacy ASL operators
- *
- * Disassembly of SSDT-I2C.aml, Thu Mar 28 21:45:12 2019
- *
- * Original Table Header:
- *     Signature        "SSDT"
- *     Length           0x00000171 (369)
- *     Revision         0x02
- *     Checksum         0x38
- *     OEM ID           "hack"
- *     OEM Table ID     "I2C"
- *     OEM Revision     0x00000000 (0)
- *     Compiler ID      "INTL"
- *     Compiler Version 0x20170929 (538380585)
- */
+// By LuletterSoul
+
+// a "GPIO Controller Enable" patch for ensuring your 
+
+// DSDT notifies the system that your device is GPIO pinned
+
+// TPD0 is the ACPI id of tracpad 
+
+// TPL1 is the ACPI id of touchscreen
+
+// TPD0 and TPL1 are both I2C devices in Dell XPS 9570 ,speacially TPD0, 
+
+// should enable GPIN interuption as VoodooI2C document requirments.
+
+
+
 DefinitionBlock ("", "SSDT", 2, "hack", "I2C", 0x00000000)
 {
     External (_SB_.PCI0.GPI0, DeviceObj)    // (from opcode)
-    External (_SB_.PCI0.I2C1.TPD1, DeviceObj)    // (from opcode)
-    External (_SB_.PCI0.I2C1.TPD1.SBFB, FieldUnitObj)    // (from opcode)
-    External (_SB_.PCI0.I2C1.TPD1.SBFG, FieldUnitObj)    // (from opcode)
+    External (_SB_.PCI0.I2C0.TPD0, DeviceObj)    // (from opcode)
+    External (_SB_.PCI0.I2C0.TPD0.SBFB, FieldUnitObj)    // (from opcode)
+    External (_SB_.PCI0.I2C0.TPD0.SBFG, FieldUnitObj)    // (from opcode)
+    External (_SB_.PCI0.I2C0.TPL1, DeviceObj)    // (from opcode)
+    External (_SB_.PCI0.I2C0.TPL1.SBFB, FieldUnitObj)    // (from opcode)
+    External (_SB_.PCI0.I2C0.TPL1.SBFG, FieldUnitObj)    // (from opcode)
+    External (_SB_.PCI0.I2C0.TPL1.XCRS, MethodObj)    // 0 Arguments (from opcode)
+    External (_SB_.PCI0.I2C1.TPD0, DeviceObj)    // (from opcode)
+    External (_SB_.PCI0.I2C1.TPD0.SBFB, FieldUnitObj)    // (from opcode)
+    External (_SB_.PCI0.I2C1.TPD0.SBFG, FieldUnitObj)    // (from opcode)
+    External (_SB_.PCI0.I2C1.TPL1, DeviceObj)    // (from opcode)
+    External (_SB_.PCI0.I2C1.TPL1.SBFB, FieldUnitObj)    // (from opcode)
+    External (_SB_.PCI0.I2C1.TPL1.SBFG, FieldUnitObj)    // (from opcode)
+    External (_SB_.PCI0.I2C1.TPL1.XCRS, MethodObj)    // 0 Arguments (from opcode)
 
-    Scope (_SB.PCI0.GPI0)
-    {
-        Method (_STA, 0, NotSerialized)  // _STA: Status
-        {
-            Return (0x0F)
-        }
-    }
-
-    Scope (_SB.PCI0.I2C1.TPD1)
+    Scope (_SB.PCI0.I2C0.TPD0)
     {
         Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
         {
@@ -41,35 +40,38 @@ DefinitionBlock ("", "SSDT", 2, "hack", "I2C", 0x00000000)
         }
     }
 
-    Name (_SB.PCI0.LPCB.PS2K.RMCF, Package (0x08)
+    Scope (_SB.PCI0.I2C0.TPL1)
     {
-        "Mouse", 
-        Package (0x02)
+        Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
         {
-            "DisableDevice", 
-            ">y"
-        }, 
+            If (CondRefOf (XCRS))
+            {
+                Return (XCRS ())
+            }
 
-        "Synaptics TouchPad", 
-        Package (0x02)
-        {
-            "DisableDevice", 
-            ">y"
-        }, 
-
-        "ALPS GlidePoint", 
-        Package (0x02)
-        {
-            "DisableDevice", 
-            ">y"
-        }, 
-
-        "Sentelic FSP", 
-        Package (0x02)
-        {
-            "DisableDevice", 
-            ">y"
+            Return (ConcatenateResTemplate (SBFB, SBFG))
         }
-    })
+    }
+
+    Scope (_SB.PCI0.I2C1.TPD0)
+    {
+        Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+        {
+            Return (ConcatenateResTemplate (SBFB, SBFG))
+        }
+    }
+
+    Scope (_SB.PCI0.I2C1.TPL1)
+    {
+        Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+        {
+            If (CondRefOf (XCRS))
+            {
+                Return (XCRS ())
+            }
+
+            Return (ConcatenateResTemplate (SBFB, SBFG))
+        }
+    }
 }
 
