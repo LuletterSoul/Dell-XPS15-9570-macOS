@@ -225,6 +225,76 @@
 					FEwEWENSUwCgDpVPU1lTC9wHpFNCRkk=
 					</data>
 				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>Rename method _PTS to ZPTS and use with SSDT-PTSWAK.aml to fix dGPU power sapping</string>
+					<key>Disabled</key>
+					<false/>
+					<key>Find</key>
+					<data>
+					FEkEX1BUUwE=
+					</data>
+					<key>Replace</key>
+					<data>
+					FEkEWlBUUwE=
+					</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>Rename method _WAK to ZWAK and use with SSDT-PTSWAK.aml to fix dGPU power sapping</string>
+					<key>Disabled</key>
+					<false/>
+					<key>Find</key>
+					<data>
+					FDlfV0FLAQ==
+					</data>
+					<key>Replace</key>
+					<data>
+					FDlaV0FLAQ==
+					</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>Rename method GPRW to YPRW and use with SSDT-UPRW.aml to fix USB "instant wake" on sleep</string>
+					<key>Disabled</key>
+					<false/>
+					<key>Find</key>
+					<data>
+					FEAGR1BSVwI=
+					</data>
+					<key>Replace</key>
+					<data>
+					FEAGWVBSVwI=
+					</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>Rename method UPRW to XPRW and use with SSDT-UPRW.aml to fix USB "instant wake" on sleep</string>
+					<key>Disabled</key>
+					<false/>
+					<key>Find</key>
+					<data>
+					FBJVUFJXAHA=
+					</data>
+					<key>Replace</key>
+					<data>
+					FBJYUFJXAHA=
+					</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>Device AC rename to ADP1  pair with SSDT-ADP1 - credit syscl(testing stage)</string>
+					<key>Disabled</key>
+					<false/>
+					<key>Find</key>
+					<data>
+					QUNfXw==
+					</data>
+					<key>Replace</key>
+					<data>
+					QURQMQ==
+					</data>
+				</dict>
 			</array>
 		</dict>
 		<key>DisabledAML</key>
@@ -316,6 +386,13 @@
 		</dict>
 		<key>Properties</key>
 		<dict>
+			<key>PciRoot(0)/Pci(0x1f,3)</key>
+			<dict>
+				<key>Comment </key>
+				<string>layout-id must be 30 or 72,wrong id will cause over kernel_task CPU usage,defaut is 30,try 72 if you need</string>
+				<key>layout-id</key>
+				<integer>30</integer>
+			</dict>
 			<key>PciRoot(0x0)/Pci(0x2,0x0)</key>
 			<dict>
 				<key>AAPL,GfxYTile</key>
@@ -336,7 +413,7 @@
 				</data>
 				<key>dpcd-max-link-rate</key>
 				<data>
-				CgAAAA==
+				FAAAAA==
 				</data>
 				<key>enable-cflbkit</key>
 				<data>
