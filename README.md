@@ -118,7 +118,7 @@
 
 注意，在首次进入系统时，可以先保留`-v`，确保机器能够正常工作后再进行此项优化。
 
- ## 解决耳机偶尔无声
+## 解决耳机偶尔无声
 
 ### 问题描述 
 
@@ -138,11 +138,9 @@
 
  不同机器的ALC298声卡可能需要使用不同Layout Id,本配置默认的Layout Id 为30，据测试，另一些机器可能需要使用72，因此你需要为机器注入合适的Layout-id（30 or 72），可以有以下两种方式：
 
-
-
- * DSDT注入：反编译`SSDT-Config` ，将AUDL值设置为`0x48`。如果你想注入Layout-id 72，请下载[SSDT-Config.zip](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/files/3075808/SSDT-Config.zip)，将文件替换到`CLOVER/ACPI/patched`
+* ~~DSDT注入：反编译`SSDT-Config` ，将AUDL值设置为`0x48`。如果你想注入Layout-id 72，请下载[SSDT-Config.zip](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/files/3075808/SSDT-Config.zip)，将文件替换到`CLOVER/ACPI/patched`~~
   
- * CLOVER注入：因为SSDT-Config影响了Clover的原生注入方式，因此常规注入失效。如果你需要将layout-id更改为72，这里可使用`Clover Configurator`在`config.plist`的`Devices`添加设备`PciRoot(0)/Pci(0x1f,3)`，在对应的`Properties`中添加以下项：
+* CLOVER注入：因为SSDT-Config影响了Clover的原生注入方式，因此常规注入失效。如果你需要将layout-id更改为72，这里可使用`Clover Configurator`在`config.plist`的`Devices`添加设备`PciRoot(0)/Pci(0x1f,3)`，在对应的`Properties`中添加以下项：
    * `layout-id   72   NUMBER`
 
  ## 驱动Dell DA300 网卡
@@ -213,7 +211,7 @@
 * 用 `SSDT-DMAC.aml` 注入系统默认搜索的DMA控制器信息
 * 用 `SSDT-UPRW.am` 修复USB潜在的 `Instant wake`
 * 通过屏蔽 `Pin 54 Pin 56` 解决DW1830睡眠唤醒后不可用的BUG，感谢    [jaymonkey](https://www.tonymacx86.com/threads/bluetooth-randomly-not-available-after-sleep.266255/post-1862126) 提供的方案
-* 使用Clover 注入 layout-id 30(SSDT注入方式已弃用)
+* 使用Clover 注入 layout-id 30(**注意：SSDT注入方式已弃用**)
 * 更新至 `Luli 1.3.7`
 * 加入 `HibernationFixup.kext` 避免休眠后无法唤醒问题
 
