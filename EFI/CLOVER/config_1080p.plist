@@ -302,7 +302,6 @@
 			<string>SSDT.aml</string>
 			<string>SSDT-XCPM.aml</string>
 			<string>SSDT-PluginType1.aml</string>
-			<string>SSDT-UPRW.aml</string>
 		</array>
 		<key>DropTables</key>
 		<array>
@@ -407,13 +406,9 @@
 				<data>
 				mz4AAA==
 				</data>
-				<key>disable-external-gpu</key>
-				<data>
-				AQAAAA==
-				</data>
 				<key>dpcd-max-link-rate</key>
 				<data>
-				FAAAAA==
+				CgAAAA==
 				</data>
 				<key>enable-cflbkit</key>
 				<data>
