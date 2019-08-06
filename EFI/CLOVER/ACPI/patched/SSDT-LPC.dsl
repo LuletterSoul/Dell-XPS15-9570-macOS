@@ -1,122 +1,63 @@
-/*
- * Intel ACPI Component Architecture
- * AML/ASL+ Disassembler version 20180427 (64-bit version)(RM)
- * Copyright (c) 2000 - 2018 Intel Corporation
- * 
- * Disassembling to non-symbolic legacy ASL operators
- *
- * Disassembly of SSDT-LPC.aml, Thu Mar 28 21:45:12 2019
- *
- * Original Table Header:
- *     Signature        "SSDT"
- *     Length           0x00000182 (386)
- *     Revision         0x02
- *     Checksum         0x03
- *     OEM ID           "hack"
- *     OEM Table ID     "LPC"
- *     OEM Revision     0x00000000 (0)
- *     Compiler ID      "INTL"
- *     Compiler Version 0x20161210 (538317328)
- */
-DefinitionBlock ("", "SSDT", 2, "hack", "LPC", 0x00000000)
+// To fix unsupported 8-series LPC devices
+
+#ifndef NO_DEFINITIONBLOCK
+DefinitionBlock("", "SSDT", 2, "hack", "_LPC", 0)
 {
-    External (_SB_.PCI0.LPCB, DeviceObj)    // (from opcode)
-
-    Scope (_SB.PCI0.LPCB)
+#endif
+    External(_SB.PCI0.LPCB, DeviceObj)
+    Scope(_SB.PCI0.LPCB)
     {
-        OperationRegion (RMP2, PCI_Config, 0x02, 0x02)
-        Field (RMP2, AnyAcc, NoLock, Preserve)
+        OperationRegion(RMP0, PCI_Config, 2, 2)
+        Field(RMP0, AnyAcc, NoLock, Preserve)
         {
-            LDID,   16
+            LDID,16
         }
-
-        Name (LPDL, Package (0x18)
+        Name(LPDL, Package()
         {
-            0x1E49, 
-            Zero, 
-            Package (0x04)
+            // list of 7-series LPC device-ids not natively supported (partial list)
+            0x1e49, 0,
+            Package()
             {
-                "device-id", 
-                Buffer (0x04)
-                {
-                     0x42, 0x1E, 0x00, 0x00                         
-                }, 
-
-                "compatible", 
-                Buffer (0x0D)
-                {
-                    "pci8086,1e42"
-                }
-            }, 
-
-            0x8C46, 
-            0x8C49, 
-            0x8C4A, 
-            0x8C4C, 
-            0x8C4E, 
-            0x8C4F, 
-            0x8C50, 
-            0x8C52, 
-            0x8C54, 
-            0x8C56, 
-            0x8C5C, 
-            0x8CC3, 
-            Zero, 
-            Package (0x04)
+                "device-id", Buffer() { 0x42, 0x1e, 0, 0 },
+                "compatible", Buffer() { "pci8086,1e42" },
+            },
+            // list of 8-series LPC device-ids not natively supported
+            // inject 0x8c4b for unsupported LPC device-id
+            0x8c46, 0x8c49, 0x8c4a, 0x8c4c, 0x8c4e, 0x8c4f,
+            0x8c50, 0x8c52, 0x8c54, 0x8c56, 0x8c5c, 0x8cc3, 0,
+            Package()
             {
-                "device-id", 
-                Buffer (0x04)
-                {
-                     0x4B, 0x8C, 0x00, 0x00                         
-                }, 
-
-                "compatible", 
-                Buffer (0x0D)
-                {
-                    "pci8086,8c4b"
-                }
-            }, 
-
-            0x9D48, 
-            0x9D58, 
-            0xA14E, 
-            0xA152, 
-            0xA2C5, 
-            Zero, 
-            Package (0x04)
+                "device-id", Buffer() { 0x4b, 0x8c, 0, 0 },
+                "compatible", Buffer() { "pci8086,8c4b" },
+            },
+            // list of 9-series LPC device-ids not natively supported (partial list)
+            0x8cc6,
+            // list of 100-series LPC device-ids not natively supported (partial list)
+            0x9d48, 0x9d58, 0xa14e, 0xa150,
+            // and 200-series...
+            0xa2c5, 0,
+            Package()
             {
-                "device-id", 
-                Buffer (0x04)
-                {
-                     0xC1, 0x9C, 0x00, 0x00                         
-                }, 
-
-                "compatible", 
-                Buffer (0x0D)
-                {
-                    "pci8086,9cc1"
-                }
-            }
+                "device-id", Buffer() { 0xc1, 0x9c, 0, 0 },
+                "compatible", Buffer() { "pci8086,9cc1" },
+            },
         })
-        Method (_DSM, 4, NotSerialized)  // _DSM: Device-Specific Method
+        Method(_DSM, 4)
         {
-            If (LNot (Arg2))
+            If (!Arg2) { Return (Buffer() { 0x03 } ) }
+            // search for matching device-id in device-id list, LPDL
+            Local0 = Match(LPDL, MEQ, ^LDID, MTR, 0, 0)
+            If (Ones != Local0)
             {
-                Return (Buffer (One)
-                {
-                     0x03                                           
-                })
+                // start search for zero-terminator (prefix to injection package)
+                Local0 = Match(LPDL, MEQ, 0, MTR, 0, Local0+1)
+                Return (DerefOf(LPDL[Local0+1]))
             }
-
-            Store (Match (LPDL, MEQ, LDID, MTR, Zero, Zero), Local0)
-            If (LNotEqual (Ones, Local0))
-            {
-                Store (Match (LPDL, MEQ, Zero, MTR, Zero, Add (Local0, One)), Local0)
-                Return (DerefOf (Index (LPDL, Add (Local0, One))))
-            }
-
-            Return (Package (0x00){})
+            // if no match, assume it is supported natively... no inject
+            Return (Package() { })
         }
     }
+#ifndef NO_DEFINITIONBLOCK
 }
-
+#endif
+//EOF
