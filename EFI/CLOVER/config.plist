@@ -14,9 +14,13 @@
 			<dict>
 				<key>AddHDMI</key>
 				<false/>
+				<key>AddMCHC</key>
+				<false/>
 				<key>AddPNLF</key>
 				<true/>
 				<key>FakeLPC</key>
+				<false/>
+				<key>FixHDA</key>
 				<false/>
 				<key>FixHPET</key>
 				<false/>
@@ -83,7 +87,7 @@
 				</dict>
 				<dict>
 					<key>Comment</key>
-					<string>Change _OSI to XOSI, use with SSDT-XOSI.aml</string>
+					<string>Change _OSI to XOSI, use wi SSDT th-XOSI.aml</string>
 					<key>Disabled</key>
 					<false/>
 					<key>Find</key>
@@ -283,7 +287,7 @@
 				</dict>
 				<dict>
 					<key>Comment</key>
-					<string>Device AC rename to ADP1  pair with SSDT-ADP1 - credit syscl(testing stage)</string>
+					<string>Device AC rename to ADP1  pair with SSDT-ADP1 - credit syscl</string>
 					<key>Disabled</key>
 					<false/>
 					<key>Find</key>
@@ -293,6 +297,42 @@
 					<key>Replace</key>
 					<data>
 					QURQMQ==
+					</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>ALSD:_STA to XSTA(ACPI0008)</string>
+					<key>Disabled</key>
+					<true/>
+					<key>Find</key>
+					<data>
+					X1NUQQ==
+					</data>
+					<key>Replace</key>
+					<data>
+					WFNUQQ==
+					</data>
+					<key>TgtBridge</key>
+					<data>
+					QUxTRA==
+					</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>I2C0:_STA to XSTA</string>
+					<key>Disabled</key>
+					<false/>
+					<key>Find</key>
+					<data>
+					X1NUQQ==
+					</data>
+					<key>Replace</key>
+					<data>
+					WFNUQQ==
+					</data>
+					<key>TgtBridge</key>
+					<data>
+					STJDMA==
 					</data>
 				</dict>
 			</array>
@@ -336,13 +376,13 @@
 			<key>PluginType</key>
 			<string>1</string>
 			<key>UseSystemIO</key>
-			<true/>
+			<false/>
 		</dict>
 	</dict>
 	<key>Boot</key>
 	<dict>
 		<key>Arguments</key>
-		<string>slide=0 darkwake=1 -ngfxbeta npci=0x2000 dart=0 brcmfx-country=#a -lilubetaall agdpmod=vit9696 -v</string>
+		<string>slide=0 darkwake=1 -ngfxbeta npci=0x2000 dart=0 -lilubetaall brcmfx-country=#a agdpmod=vit9696 -v</string>
 		<key>CustomLogo</key>
 		<false/>
 		<key>Debug</key>
@@ -387,10 +427,95 @@
 		<dict>
 			<key>PciRoot(0)/Pci(0x1f,3)</key>
 			<dict>
-				<key>Comment </key>
-				<string>layout-id must be 30 or 72,wrong id will cause over kernel_task CPU usage,defaut is 30,try 72 if you need</string>
+				<key>AAPL,slot-name</key>
+				<string>Built-in</string>
+				<key>device_type</key>
+				<string>Audio Controller</string>
 				<key>layout-id</key>
 				<integer>30</integer>
+				<key>model</key>
+				<string>Realtek ALC298</string>
+			</dict>
+			<key>PciRoot(0x0)/Pci(0x0,0x0)</key>
+			<dict>
+				<key>AAPL,slot-name</key>
+				<string>Built-in</string>
+				<key>device-type</key>
+				<string>Host bridge</string>
+				<key>model</key>
+				<string>8th Gen Core Processor Host Bridge</string>
+			</dict>
+			<key>PciRoot(0x0)/Pci(0x14,0x0)</key>
+			<dict>
+				<key>AAPL,slot-name</key>
+				<string>Built-in</string>
+				<key>device-type</key>
+				<string>USB Controller</string>
+				<key>model</key>
+				<string>Cannon Lake PCH USB 3.1</string>
+			</dict>
+			<key>PciRoot(0x0)/Pci(0x14,0x2)</key>
+			<dict>
+				<key>AAPL,slot-name</key>
+				<string>Built-in</string>
+				<key>device-type</key>
+				<string>RAM memory</string>
+				<key>model</key>
+				<string>Cannon Lake PCH Shared SRAM</string>
+			</dict>
+			<key>PciRoot(0x0)/Pci(0x15,0x0)</key>
+			<dict>
+				<key>AAPL,slot-name</key>
+				<string>Built-in</string>
+				<key>device-type</key>
+				<string>Touchscreen Controller</string>
+				<key>model</key>
+				<string>Cannon Lake PCH Serial IO I2C Controller #0</string>
+			</dict>
+			<key>PciRoot(0x0)/Pci(0x15,0x1)</key>
+			<dict>
+				<key>AAPL,slot-name</key>
+				<string>Built-in</string>
+				<key>device-type</key>
+				<string>Trackpad Controller</string>
+				<key>model</key>
+				<string>Cannon Lake PCH Serial IO I2C Controller #1</string>
+			</dict>
+			<key>PciRoot(0x0)/Pci(0x16,0x0)</key>
+			<dict>
+				<key>AAPL,slot-name</key>
+				<string>Built-in</string>
+				<key>device-type</key>
+				<string>Communication Controller</string>
+				<key>model</key>
+				<string>Cannon Lake PCH HECI</string>
+			</dict>
+			<key>PciRoot(0x0)/Pci(0x17,0x0)</key>
+			<dict>
+				<key>AAPL,slot-name</key>
+				<string>Built-in</string>
+				<key>device-type</key>
+				<string>SATA Controller</string>
+				<key>model</key>
+				<string>Cannon Lake Mobile PCH SATA</string>
+			</dict>
+			<key>PciRoot(0x0)/Pci(0x1c,0x0)/Pci(0x0,0x0)</key>
+			<dict>
+				<key>AAPL,slot-name</key>
+				<string>Built-in</string>
+				<key>device-type</key>
+				<string>Network Controller</string>
+				<key>model</key>
+				<string>BCM43602 802.11ac Wireless LAN SoC</string>
+			</dict>
+			<key>PciRoot(0x0)/Pci(0x1f,0x0</key>
+			<dict>
+				<key>compatible</key>
+				<string>pci8086,9cc1</string>
+				<key>device-id</key>
+				<data>
+				wZwAAA==
+				</data>
 			</dict>
 			<key>PciRoot(0x0)/Pci(0x2,0x0)</key>
 			<dict>
@@ -402,10 +527,14 @@
 				<data>
 				AACbPg==
 				</data>
+				<key>AAPL,slot-name</key>
+				<string>Built-in</string>
 				<key>device-id</key>
 				<data>
 				mz4AAA==
 				</data>
+				<key>device_type</key>
+				<string>Display Controller</string>
 				<key>dpcd-max-link-rate</key>
 				<data>
 				FAAAAA==
@@ -450,22 +579,20 @@
 				<data>
 				AQAAAA==
 				</data>
-				<key>framebuffer-fbmem</key>
-				<data>
-				AAAAAw==
-				</data>
 				<key>framebuffer-patch-enable</key>
 				<data>
 				AQAAAA==
 				</data>
-				<key>framebuffer-stolenmem</key>
+				<key>framebuffer-portcount</key>
 				<data>
-				AACQAw==
+				BAAAAA==
 				</data>
 				<key>framebuffer-unifiedmem</key>
 				<data>
 				AAAAgA==
 				</data>
+				<key>model</key>
+				<string>Intel UHD Graphics 630 (Mobile) </string>
 			</dict>
 		</dict>
 		<key>USB</key>
@@ -567,7 +694,7 @@
 		<key>KernelCpu</key>
 		<false/>
 		<key>KernelLapic</key>
-		<true/>
+		<false/>
 		<key>KernelPm</key>
 		<true/>
 		<key>KernelToPatch</key>
@@ -616,6 +743,22 @@
 				<key>Replace</key>
 				<data>
 				igKEwOtC
+				</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Disable panic kext logging on 10.14.4  Release kernel</string>
+				<key>Disabled</key>
+				<false/>
+				<key>Find</key>
+				<data>
+				AIoChMB0
+				</data>
+				<key>MatchOS</key>
+				<string>10.14.4</string>
+				<key>Replace</key>
+				<data>
+				AIoChMDr
 				</data>
 			</dict>
 		</array>
