@@ -26,12 +26,12 @@
 
 * BIOS: `1.5.0 ~ 1.11.2`
 * 系统: `Mac Mojave + Windows 10 1809` 双系统共存
-* macOS: `Mojave 10.14 ~  10.14.5`
+* macOS: `Mac Mojave 10.14.X` & `Mac Catalina 10.15 beta 3~5`
 
 # 使用方法
   [bavariancake](https://github.com/bavariancake/XPS9570-macOS)在
   `Installation and system updates`一项中介绍了安装Mojave的基本步骤，
-  假设您已经完成了USB安装介质制作先备工作，想使用本仓库发布的配置完成黑苹果之旅，那么，您需要先了解以下三个配置文件的作用，清楚在何时切换到适合你机型的配置文件完成驱动。
+  **假设您已经完成了USB安装介质制作先备工作**，想使用本仓库发布的配置完成黑苹果之旅，那么，您需要先了解以下三个配置文件的作用，清楚在何时切换到适合你机型的配置文件完成驱动。
 
 ## 配置文件介绍
 
@@ -55,23 +55,23 @@
 
 ## 使用步骤
 
-如果你已经对Mac OS的安装基础步骤了如指掌，你仅需要知道以上三个文件的使用时刻；否则，请先完成基础学习，并留意每个这三个配置文件在这些步骤中发挥的作用：
+* 1.**替换安装卷EFI**：将USB介质EFI分区自带的Clover文件夹删除，替换为本仓库的Clover
+* 2.**使用 `config_install.plist`**：进入到CLOVER启动界面时，将Clover使用的配置切换为`config_install.plist`；或者先将`config_install.plist`重命名为`config.plist`，替换原`config.plist`（注意备份！）再进入该界面
 
-* 1.**替换安装卷EFI**：将本仓库的CLOVER文件夹替换掉USB介质EFI分区自带的CLOVER
-* 2.**使用 `config_install.plist`**：进入到CLOVER启动界面时，如果您已经了解CLOVER的基础使用方法，您应该能在这个界面将`config_install.plist`切换为要使用的配置文件；否则，因为config.plist是CLOVER默认是使用的配置文件名，你需要将`clover_install.plist`重命名为`config.plist`并替换掉原`config.plist`（注意备份！）后再进入该界面
+* 3.**完成初始安装**：选择安装卷图标，进入安装界面完成安装，如果过程成出现安装失败等问题，可以多次进入安装界面（3~5次）
 
-* 3.**完成初始安装**：选择Mojave安装卷图标，进入安装界面完成安装（请在此之前完成安装基础的学习）如果过程成出现安装失败等问题，可以多次进入安装界面（3~5次）
+* 4.**重建缓存**：进入桌面后，从终端运行`sudo kextcache -i /`，重建缓存
 
-* 4.**重建缓存**：进入桌面后运行首先从终端运行`sudo kextcache -i /`，重建缓存
-
-* 5.**使用 `config.plist(for 4k)`**：如果你的机器是4k版本，则可以直接使用`config.plist`。否则，见步骤6
+* 5.**使用 `config.plist(for 4k)`**：若机器是4k版本，直接使用`config.plist`。否则，见步骤6
   
-* 6.**使用 `config_1080p.plist`**：如果你机型是XPS 9570 1080P,将   `config_1080P.plist`重命名为`config.plist`替换原config
+* 6.**使用 `config_1080p.plist`**：若机型是1080p,将`config_1080P.plist`重命名为`config.plist`替换原config
 * 7.**加入生成三码**：本仓库没有填入默认的三码，如果你想激活Facetime和iMessage，请参考[bavariancake](https://github.com/bavariancake/XPS9570-macOS)提供的激活方案，或者提取白苹果机器中的三码在本机中使用。如果您没有激活需求，那么您可用`Clover Configruator` 编辑 `config.plist`，在`SIMBIOS`一项中，选择机型`MacBookPro15,1`，随机生成一套三码使用。
 
-* 8.**验证UHD630是否已驱动**：如果核显已经驱动，XPS的4K显示屏应该自动开启1080P的HDpi体现清晰视界。关于本机的报告中的显卡一栏应该显示为`Intel UHD Graphics 630 2048 MB`
+* 8.**验证UHD630是否已驱动**：如果核显已经驱动，4K显示屏会自动开启HDpi。关于本机报告中显卡显示为`Intel UHD Graphics 630 2048 MB`
 
-   9.**将部分驱动加入`L/E`或者`S/L/E`（可选）**:在本仓库配置的基础上，如果您想让驱动注入方式更加接近白苹果，请仿照[完善方案--去除-v模式]()的驱动安装方法，建议仅保留在将`CLOVE/kexts/Other`中的`VirtualSmc`，其余驱动安装到`L/E`或者`S/L/E`下，然后把在`CLOVER/kexts/Ohter`路径中已安装的驱动删除。最后，重建缓存重启电脑。（注意！在每次系统更新后，已安装的驱动缓存会被清空，要重复以上操作。）
+* 9.**将部分驱动加入`L/E`或者`S/L/E`（可选）**:在本仓库配置的基础上，如果您想让驱动注入方式更加接近白苹果，请仿照[完善方案--去除-v模式]()的驱动安装方法，建议仅保留在将`CLOVE/kexts/Other`中的`VirtualSmc`，其余驱动安装到`L/E`或者`S/L/E`下，然后把在`CLOVER/kexts/Ohter`路径中已安装的驱动删除。最后，重建缓存重启电脑。
+   
+**每次进行更新时，只需切换到config_install.plist完成安装，进入系统后第一件事就是重建缓存!**
 
 # 已知问题
 
@@ -136,12 +136,12 @@
  
  ### 解决方法
 
- 不同机器的ALC298声卡可能需要使用不同Layout Id,本配置默认的Layout Id 为30，据测试，另一些机器可能需要使用72，因此你需要为机器注入合适的Layout-id（30 or 72），可以有以下两种方式：
+ 不同机器的ALC298声卡可能需要使用不同Layout Id,本配置默认的Layout Id 为30，
+ 据测试一些机器需要注入72：在
 
-* ~~DSDT注入：反编译`SSDT-Config` ，将AUDL值设置为`0x48`。如果你想注入Layout-id 72，请下载[SSDT-Config.zip](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/files/3075808/SSDT-Config.zip)，将文件替换到`CLOVER/ACPI/patched`~~
-  
-* CLOVER注入：因为SSDT-Config影响了Clover的原生注入方式，因此常规注入失效。如果你需要将layout-id更改为72，这里可使用`Clover Configurator`在`config.plist`的`Devices`添加设备`PciRoot(0)/Pci(0x1f,3)`，在对应的`Properties`中添加以下项：
-   * `layout-id   72   NUMBER`
+ `Devices/Properties/PciRoot(0)/Pci(0x1f,3)`一栏中，将`layout-id`修改为72
+
+* `layout-id   72   NUMBER`
 
  ## 驱动Dell DA300 网卡
 
@@ -199,6 +199,14 @@
 ![变频](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/raw/master/screenshots/Intel%20Turbo%20Boost.png)
  -->
 # 更新历史
+
+## 2019年8月8日
+* 支持 `Mac Mojave 10.14.X` 和 `Mac Catalina Beta 5`
+* 采用折中方案禁用触控屏，修复`kenerl_task`CPU使用率超过`10%`的bug（触控屏已被禁用，介意者勿使用该版本）
+* 在`Properties`注入伪造的`PCI`列表，完善了系统报告
+* 删除`AppleBacklightInjector.kext`，因为WEG已自动注入
+* 使用原来`FakeSMC`替换`VirtualSMC`，避免安装`Catalina`时出现的`Service exited with abnormal code: 1`
+* 使用非必须的热补丁完善Mac要求的ACPI列表
 
 ## 2019年7月21日
 
@@ -304,13 +312,11 @@ XPS 9570的HDMI输出问题终于有了进展：依旧是来自@0xFireWolf的出
 
 使用该配置的XPS 9570 4K似乎在最新版本工作得很好，持续测试后仍存在许多内核问题、驱动问题，我的愿景是让XPS 9570 4K在Mac OS可以“完美”运行。
 
-但目前看来很困难。首先，我是一名在校大学生，学业十分繁忙，真正接触到XPS 9570黑苹果是在去年12月份，无论从知识基础而言，还是从知识的深广度而言，都十分局限，黑苹果不是我的专业，面临一些疑难杂症无法快速提供解决方案；其次，我的缺乏很多外设和机型，很具有自不同机型的朋友，提出了在我机型上没有体现过的问题，以及一些相关的外设驱动问题（如雷电设备），缺乏设备让我的测试工作举步维艰；再有，Github的朋友虽然踊跃提出很多问题，但大部分偏基础而非广泛性的Bug。也有一些朋友，虽然已经找到相关问题的解决方案，偏偏因为各种原因没把方案详细记录下来给后续人们留下宝贵经验。
-
-因此，时间、精力、能力限制我对此仓库维护的及时性，很多ISSUE的提问我也没时间一一回答。`Mac Catalina 10.15.X`版本即将到来，新版本在XPS 9570的运行情况如何呢？我不知道，但我希望有意愿、有能力的朋友，可以跟我一起探索、攻克已知的困难问题，及时PR或反馈一些有合作性的贡献（如完善中英文ReadMe、提供不同机型的反馈），或者提出更多可改进的方案，而不是做伸手无畏、闭门造车的路人。
+但时间、精力、能力限制我对此仓库维护的及时性，很多ISSUE的提问我也没时间一一回答。`Mac Catalina 10.15.X`版本即将到来，新版本在XPS 9570的运行情况如何呢？我不知道，但我希望有意愿、有能力的朋友，可以跟我一起探索、攻克已知的困难问题，及时PR或反馈一些有合作性的贡献（如完善中英文ReadMe、提供不同机型的反馈），或者提出更多可改进的方案，而不是做伸手无畏、闭门造车的路人。
 
 希望此仓库可以持续给大家提供有意义的更新，希望XPS 9570 能早日实现完美的Hackintosh!
 
-最后，我非常支持大家推广本项目，但如果您需要发布此EFI或转载给他人，请务必注明我的仓库出处，以及[Xigtun](https://github.com/Xigtun/xps-9570-mojave),[bavariancake](https://github.com/bavariancake/XPS9570-macOS)的仓库地址。如果您肯定我的工作，我也很乐意接受一颗来自君子的大写星星哦~~
+最后，我非常支持大家推广本项目，但如果您需要发布此EFI或转载给他人，请务必注明我的仓库出处，以及[bavariancake](https://github.com/bavariancake/XPS9570-macOS)，[Xigtun](https://github.com/Xigtun/xps-9570-mojave)的仓库地址。如果您肯定我的工作，我也很乐意接受一颗来自君子的大写星星哦~~
 
 **请勿用于商业行为！尊重开源与劳动！您的合作与支持是我们持续维护和分享的动力。**
 
