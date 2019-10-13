@@ -47,7 +47,7 @@
   
   `dpcd-max-link-rate` = `<14000000>`
 
-### `confug_1080P.plist`
+### `config_1080P.plist`
 
   该文件专门用来驱动XPS 9570 1080P版本的机型，与`config.plist`的不同仅在：
   
