@@ -499,15 +499,6 @@
 				<key>model</key>
 				<string>Cannon Lake Mobile PCH SATA</string>
 			</dict>
-			<key>PciRoot(0x0)/Pci(0x1c,0x0)/Pci(0x0,0x0)</key>
-			<dict>
-				<key>AAPL,slot-name</key>
-				<string>Built-in</string>
-				<key>device-type</key>
-				<string>Network Controller</string>
-				<key>model</key>
-				<string>BCM43602 802.11ac Wireless LAN SoC</string>
-			</dict>
 			<key>PciRoot(0x0)/Pci(0x1f,0x0</key>
 			<dict>
 				<key>compatible</key>
