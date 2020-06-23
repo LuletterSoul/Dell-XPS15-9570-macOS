@@ -1,13 +1,10 @@
 
-English | [中文](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/README_CN.md)
+English | [中文](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/blob/master/README_CN.md)
 
 # Introduction
-
-***
 This hackintosh configuration is built for the Dell XPS 9570 laptop based Clover.It theoretically supports macOS 10.14.X - macOS 10.15.X. It integrates common kexts for almost all devices,such as audio card, intel graphic card, 4K display and so on.It fully supports  dual signals output using 4K@60Hz via HDMI 2.0 and Type C, thunderbolt devices are boot coldly and DW1830 is used to suppot WLAN and Airdop.It also brings original touch gestures like Mac devices, and sleep and wake up are general normal.。
 
 # Tested Environment
-***
 ##  Harware
 - [x] Model: Dell XPS 9570
 - [x] CPU: Intel Core i7-8750H
@@ -30,11 +27,8 @@ This hackintosh configuration is built for the Dell XPS 9570 laptop based Clover
 
 # Tutorial
 
-***
 [Kevin Shroff](https://github.com/kevinshroff) brought us awsome [Full Installation Guide](https://www.youtube.com/watch?v=h22MJD8C1r8&t=823s).See it firstly and you should kown as below before installation:
  ## Configuration Plist
-
-***
 ### `config_install.plist`
 
 This is used for installation phase, the purpose is to inject a incorrect `ig-platform-id = 0x12345678`, and disable graphic card, so that the system can enter desktop after complete installation.
@@ -69,8 +63,6 @@ This file is used for `XPS 9570 8750H 1080P` model.The difference from `config.p
    `dpcd-max-link-rate` = `<0A000000>`
 
 ## Installation
-
-***
 ### 1. Replace EFI of installation volume
 
 Delete the clover folder from original EFI partition and replace it with the Clover folder of this repository.
@@ -97,25 +89,19 @@ It is recommended to only keep `VirtualSmc.kext`/`FakeSMC.kext` in `CLOVE/kexts/
    
 ## Upgrade
 
-***
 Switch back `config_install.plist` to complete upgrade, run `sudo kextcache -i /` to rebuild kext cache immediately after entering destop.
 
 
 # More contents
-
-***
   see more details from [issues set](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/doc/issues.md) and [update history](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/doc/issues.md)
 
 
 # Statement
 
-***
 I sincerely apologize for my procrastination.But the project is stable enough and has supported full version of Catalina so far.Thank you for all passion and stars.I am strongly support everyone to promote this project. If you need to publish this EFI or reprint it to others, please be sure to indicate my [repo](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave), [bavariancake's repo](https://github.com/bavariancake/XPS9570-macOS) and [Xigtun's repo](https://github.com/Xigtun/xps-9570-mojave).Star me if you really like my contribution for hackintosh community!
 
 
 # Credits
-
-***
 
 * [Apple](https://www.apple.com) 
 * [Rehabman](https://github.com/RehabMan)

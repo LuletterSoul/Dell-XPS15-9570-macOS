@@ -1,15 +1,13 @@
 
 
-[English ](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/README.md) | 中文
+[English ](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/blob/master/README.md) | 中文
 
 # 介绍
 
-***
 本项目是基于`Clover`为`Dell XPS 9570 8750H 4K`笔记本构建的黑苹果配置， 理论上支持`macOS 10.14.X - Mac OS 10.15.X`。该配置整合常用的原生声卡驱动、显卡驱动、4K显示器驱动、摄像头驱动，支持 `HDMI 2.0` 与 `DisplaryPort via Type C` 双屏`4K@60Hz`输出，支持冷启动的雷电3设备，驱动无线网卡DW1830以支持Wifi、AirDrop等无线网络传输功能，支持仿白苹果的触控手势，睡眠唤醒基本正常。
 
 
 # 环境
-***
 ##  硬件
 - [x] Model: Dell XPS 9570
 - [x] CPU: Intel Core i7-8750H
@@ -32,8 +30,6 @@
 - [x] macOS Catalina: `10.15.0 - 10.15.5`
 
 # 使用方法
-
-***
 [Kevin Shroff](https://github.com/kevinshroff)为我们带来了非常棒的[安装流程](https://www.youtube.com/watch?v=h22MJD8C1r8&t=823s)。在开始安装前，我们需要了解的是：
  ## 配置文件介绍
 
@@ -102,14 +98,10 @@
 
 
 # 更多内容
-
-***
   见[问题集锦](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/doc/issues.md)和[更新历史](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/doc/issues.md)
 
 
 # 声明
-
-***
 因为本人精力有限，仓库维护及时性得不到保证，对此我深感抱歉。目前项目已支持Catalina全版本。
 
 感谢大家一直以来的厚爱，我非常支持大家推广本项目，如果您需要发布此EFI或转载给他人，请务必注明我的仓库出处，以及[bavariancake](https://github.com/bavariancake/XPS9570-macOS)，[Xigtun](https://github.com/Xigtun/xps-9570-mojave)的仓库地址。如果您肯定我的工作，我也很乐意接受一颗来自君子的大写星星哦~~
@@ -117,8 +109,6 @@
 **请勿用于商业行为！尊重开源与劳动！您的合作与支持是我们持续维护和分享的动力。**
 
 # 鸣谢
-***
-
 * [Apple](https://www.apple.com) for macOS
 * [Rehabman](https://github.com/RehabMan)：提供了大量的黑苹果驱动，国外黑苹果论坛的大佬，向大佬致敬！
 * [Lilu](https://github.com/acidanthera/Lilu)： 向该内核扩展项目伟大的逆向工程师与开发者致敬！
