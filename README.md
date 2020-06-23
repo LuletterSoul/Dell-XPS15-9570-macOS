@@ -93,7 +93,7 @@ Switch back `config_install.plist` to complete upgrade, run `sudo kextcache -i /
 
 
 # More contents
-  see more details from [issues set](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/doc/issues.md) and [update history](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/doc/issues.md)
+  see more details from [issues set](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/blob/master/doc/issues.md) and [update history](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/blob/master/doc/history.md)
 
 
 # Statement

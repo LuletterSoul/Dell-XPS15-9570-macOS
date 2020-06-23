@@ -98,7 +98,7 @@
 
 
 # 更多内容
-  见[问题集锦](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/doc/issues.md)和[更新历史](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/doc/issues.md)
+  见[问题集锦](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/blob/master/doc/issues.md)和[更新历史](https://github.com/LuletterSoul/Dell-XPS-15-9570-macOS-Mojave/blob/master/doc/history.md)
 
 
 # 声明
